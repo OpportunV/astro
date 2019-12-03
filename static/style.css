@@ -1,4 +1,10 @@
 body {
-    color: #fff;
-    background-color: #313131;
+  text-align: center;
+  color: #fff;
+  background-color: #313131;
+  margin-top: 5rem;
+}
+
+.from-holder {
+  text-align: center;
 }

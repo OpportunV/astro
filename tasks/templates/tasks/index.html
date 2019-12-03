@@ -4,17 +4,13 @@
 {{ title }}
 {% endblock %}
 
-{% block content_title %}
-{{ title }}
-{% endblock %}
-
 {% block content %}
 {% for task in tasks %}
 <article class="media content-section">
   <div class="media-body">
     <div class="article-metadata">
       <a class="mr-2" href="#">{{ task.author.username }}</a>
-      <small class="text-muted">{{ task.date_added }}</small>
+      <small class="text-muted">{{ task.date_added.strftime('%Y.%m.%d %H:%M') }}</small>
     </div>
     <h2><a class="article-title" href="{{ url_for('tasks.task_details', link=task.link) }}">
       {{ task.title }}

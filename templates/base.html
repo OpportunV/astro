@@ -45,9 +45,6 @@
     </div>
   </nav>
   <main role="main" class="container">
-    <h1>
-      {% block content_title %}{% endblock %}
-    </h1>
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
@@ -57,7 +54,11 @@
         {% endfor %}
       {% endif %}
     {% endwith %}
-    {% block content %}{% endblock %}
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
   </main>
 </body>
 </html>

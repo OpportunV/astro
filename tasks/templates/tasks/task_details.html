@@ -4,10 +4,6 @@
 {{ task.title }}
 {% endblock %}
 
-{% block content_title %}
-{{ task.title }}
-{% endblock %}
-
 {% block content %}
 <article class="media content-section">
   <div class="media-body">
@@ -18,15 +14,15 @@
     <h2><a class="article-title" href="{{ url_for('tasks.task_details', link=task.link) }}">
       {{ task.title }}
     </a></h2>
+    {% for tag in tags %}
+    <a href="{{ url_for('tasks.tag_details', slug=tag.slug) }}">
+      <button type="button" class="btn btn-light btn-sm">
+        {{ tag.name }}
+      </button>
+    </a>
+    {% endfor %}
     <p class="article-content">{{ task.content }}</p>
   </div>
 </article>
 
-<div class="tags">
-  {% for tag in tags %}
-  <a href="{{ url_for('tasks.tag_details', slug=tag.slug) }}">
-    <span class="label label-primary">{{ tag.name }}</span>
-  </a>
-  {% endfor %}
-</div>
 {% endblock %}

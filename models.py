@@ -24,7 +24,11 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(120), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     tasks = db.relationship('Task', backref='author', lazy=True)
-    
+
+    @property
+    def is_admin(self):
+        return self.id == 1
+
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
@@ -36,6 +40,7 @@ class Task(db.Model):
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     link = db.Column(db.String(120), unique=True)
+    is_active = db.Column(db.Boolean, default=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

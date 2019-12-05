@@ -6,7 +6,7 @@
 
 {% block content %}
 {% for task in tasks %}
-<article class="media content-section">
+<article class="media content-section {{ '' if task.is_active else 'hidden' }}">
   <div class="media-body">
     <div class="article-metadata">
       <a class="mr-2" href="#">{{ task.author.username }}</a>

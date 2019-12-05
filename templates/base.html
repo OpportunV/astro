@@ -24,12 +24,14 @@
           <li class="nav-item {{ 'active' if request.endpoint == 'tasks.index' else '' }}">
             <a class="nav-link" href="{{ url_for('tasks.index') }}">Tasks</a>
           </li>
-          <li class="nav-item {{ 'active' if request.endpoint == '#' else '' }}">
-            <a class="nav-link" href="#">Python</a>
+          {% if current_user.is_authenticated %}
+          <li class="nav-item {{ 'active' if request.endpoint == 'tasks.new' else '' }}">
+            <a class="nav-link" href="{{ url_for('tasks.new') }}">New Task</a>
           </li>
-  <!--        <li class="nav-item">-->
-  <!--          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
-  <!--        </li>-->
+          {% endif %}
+          <!--        <li class="nav-item">-->
+          <!--          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+          <!--        </li>-->
         </ul>
         <div class="navbar-nav">
           <a class="nav-item nav-link" href="#">Right</a>

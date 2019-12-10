@@ -2,8 +2,9 @@ import re
 from datetime import datetime
 
 from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired
 
-from app import db, login_manager
+from app import db, login_manager, app
 
 
 @login_manager.user_loader
@@ -24,11 +25,24 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(120), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     tasks = db.relationship('Task', backref='author', lazy=True)
-
+    
     @property
     def is_admin(self):
         return self.id == 1
-
+    
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(app.config.get('SECRET_KEY'), expires_sec)
+        return s.dumps({'user_id': self.id}).decode('utf-8')
+    
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config.get('SECRET_KEY'))
+        try:
+            user_id = s.loads(token).get('user_id')
+        except SignatureExpired:
+            return
+        return User.query.get(user_id)
+    
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 

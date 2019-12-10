@@ -1,7 +1,9 @@
 from tasks.blueprint import tasks
+from users.view import users
 from view import *
 
 app.register_blueprint(tasks, url_prefix='/tasks')
+app.register_blueprint(users)
 
 if __name__ == '__main__':
     app.run(debug=True)
